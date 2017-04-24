@@ -1,8 +1,15 @@
 import re
 
 import tailer
+import os
 
 log_file = 'C:/Program Files (x86)/Grinding Gear Games/Path of Exile/logs/client.txt'
+
+
+def put_on_clipboard(text):
+    # WARNING, THIS IS THE HACKIEST SHIT EVER, I JUST WANTED TO MAKE IT WORK REAL QUICK, IF YOU HAVE A BETTER WAY PLZ
+    # MAKE A PULL REQUEST
+    os.system('echo {0} | clip'.format(text))
 
 
 def parse(line):
@@ -32,6 +39,7 @@ def main():
         elif event == 'LOADSCREEN_STOP' and last_loadscreen_start is not None:
             total_loadscreen_time += timestamp - last_loadscreen_start
             last_loadscreen_start = None
+            put_on_clipboard('My total loadscreen time so far: {0}ms'.format(total_loadscreen_time))
             print('Total loadscreen time: {0}'.format(total_loadscreen_time))
 
 if __name__ == '__main__':
